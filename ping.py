@@ -2,8 +2,10 @@
 
 from pinger import Pinger
 from enum import Enum
+from datetime import datetime
 import time
 import logging
+import notification
 
 class State(Enum):
   INITIALIZING = 1
@@ -27,12 +29,13 @@ if __name__ == "__main__":
     elif state == State.ONLINE:
       if not pingSuccessful:
         state = State.OFFLINE
+        offlineDate = datetime.now()
     elif state == State.OFFLINE:
       if pingSuccessful:
         state = State.INITIALIZING
+        notification.send(f"Internet connection restored, offline since {offlineDate.isoformat()}")
     else:
       logging.error(f"invalid state: {state}")
       state = State.INITIALIZING
-    logging.debug(f"{oldState} -> {state}")
     if oldState != state:
       logging.info(f"{oldState} -> {state}")
