@@ -3,6 +3,7 @@
 from pinger import Pinger
 from enum import Enum
 from datetime import datetime
+import os
 import time
 import logging
 import notification
@@ -13,7 +14,15 @@ class State(Enum):
   OFFLINE = 3
 
 if __name__ == "__main__":
-  logging.basicConfig(format='%(asctime)s:%(levelname)s:%(name)s:%(message)s', level=logging.INFO)
+  logArgs = {
+    'format': '%(asctime)s:%(levelname)s:%(process)d:%(message)s',
+    'level': logging.INFO
+  }
+  logFile = os.environ.get('LOG_FILE')
+  if logFile != None:
+    logArgs['filename'] = logFile
+
+  logging.basicConfig(**logArgs)
 
   pinger = Pinger("8.8.8.8")
   pinger.start()

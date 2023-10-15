@@ -1,0 +1,8 @@
+#!/bin/sh
+
+set -ex
+
+sudo cp internet-monitor.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable internet-monitor.service
+sudo systemctl start internet-monitor.service

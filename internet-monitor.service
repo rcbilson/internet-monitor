@@ -1,0 +1,11 @@
+[Unit]
+Description=Internet monitor
+After=multi-user.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/bin/bash /home/richard/internet-monitor/run_service
+
+[Install]
+WantedBy=multi-user.target
